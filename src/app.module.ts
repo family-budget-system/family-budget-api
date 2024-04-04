@@ -10,8 +10,6 @@ import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
-    AuthModule,
-    UserModule,
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,6 +27,8 @@ import { TransactionModule } from './transaction/transaction.module';
     }),
     CategoryModule,
     TransactionModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
