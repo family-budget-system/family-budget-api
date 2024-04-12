@@ -8,11 +8,17 @@ import {
 } from 'typeorm';
 import { Category } from '../../category/entities/category.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
+import { Bill } from '../../bill/entities/bill.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @OneToMany(() => Bill, (bill) => bill.user, {
+    onDelete: 'CASCADE',
+  })
+  bills: Bill[];
 
   @OneToMany(() => Category, (category) => category.user, {
     onDelete: 'CASCADE',
