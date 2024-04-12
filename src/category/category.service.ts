@@ -8,12 +8,16 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
+
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto, id: number) {
@@ -23,7 +27,7 @@ export class CategoryService {
     });
 
     if (isExist.length) {
-      throw new BadRequestException('This category already exist!');
+      throw new BadRequestException('Данная категория уже существует');
     }
 
     const newCategory = {
@@ -37,11 +41,25 @@ export class CategoryService {
     return this.categoryRepository.save(newCategory);
   }
 
-  async findAll(id: number) {
-    return await this.categoryRepository.find({
-      where: { user: { id } },
-      relations: { transactions: true },
-    });
+  async createDefaultCategory(createCategoryDto: CreateCategoryDto) {
+    const newCategory = {
+      title: createCategoryDto.title,
+    };
+
+    return this.categoryRepository.save(newCategory);
+  }
+
+  async findAllDefault() {
+    return this.categoryRepository.find({ where: { isDefault: true } });
+  }
+
+  async findAllByUser(userId: number) {
+    const user = await this.userIsExist(userId);
+    if (!user) throw new NotFoundException('Пользователь не найден');
+
+    const defaultCategories = await this.findAllDefault();
+
+    return [...defaultCategories, ...user.categories];
   }
 
   async findOne(id: number) {
@@ -50,7 +68,7 @@ export class CategoryService {
 
     return await this.categoryRepository.findOne({
       where: { id },
-      relations: { transactions: true, user: true },
+      relations: { user: true },
     });
   }
 
@@ -66,6 +84,10 @@ export class CategoryService {
       throw new NotFoundException('Category not found');
 
     return await this.categoryRepository.delete(id);
+  }
+
+  async userIsExist(id: number) {
+    return await this.userRepository.findOne({ where: { id } });
   }
 
   async categoryIsExist(id: number) {

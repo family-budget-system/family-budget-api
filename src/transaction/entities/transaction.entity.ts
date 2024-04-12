@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
-import { Category } from '../../category/entities/category.entity';
+import { Bill } from '../../bill/entities/bill.entity';
 
 @Entity()
 export class Transaction {
@@ -25,9 +25,9 @@ export class Transaction {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Category, (category) => category.transactions)
+  @ManyToOne(() => Bill, (bill) => bill.transactions)
   @JoinColumn({ name: 'category_id' })
-  category: Category;
+  bill: Bill;
 
   @CreateDateColumn()
   createdAt: Date;

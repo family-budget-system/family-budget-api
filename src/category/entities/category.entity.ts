@@ -8,7 +8,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
-import { Transaction } from '../../transaction/entities/transaction.entity';
 
 @Entity()
 export class Category {
@@ -18,18 +17,16 @@ export class Category {
   @Column()
   title: string;
 
-  @ManyToOne(() => User, (user) => user.categories)
+  @ManyToOne(() => User, (user) => user.categories, { nullable: true })
   @JoinColumn({ name: 'user_id' })
-  user: User;
-
-  @ManyToOne(() => Transaction, (transaction) => transaction.category, {
-    onDelete: 'CASCADE',
-  })
-  transactions: Transaction[];
+  user: User | null;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ default: false })
+  isDefault: boolean;
 }

@@ -29,7 +29,7 @@ export class CategoryController {
 
   @Get()
   findAll(@Req() req) {
-    return this.categoryService.findAll(+req.user.id);
+    return this.categoryService.findAllByUser(+req.user.id);
   }
 
   @Get(':id')

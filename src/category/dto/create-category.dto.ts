@@ -5,5 +5,5 @@ export class CreateCategoryDto {
   @IsNotEmpty()
   title: string;
   @IsOptional()
-  user?: User;
+  user?: User | null;
 }

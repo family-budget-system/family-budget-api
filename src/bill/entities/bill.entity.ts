@@ -31,7 +31,7 @@ export class Bill {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Transaction, (transaction) => transaction.category, {
+  @ManyToOne(() => Transaction, (transaction) => transaction.bill, {
     onDelete: 'CASCADE',
   })
   transactions: Transaction[];
