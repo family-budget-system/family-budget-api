@@ -87,7 +87,10 @@ export class CategoryService {
   }
 
   async userIsExist(id: number) {
-    return await this.userRepository.findOne({ where: { id } });
+    return await this.userRepository.findOne({
+      where: { id },
+      relations: { categories: true },
+    });
   }
 
   async categoryIsExist(id: number) {

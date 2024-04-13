@@ -13,13 +13,16 @@ export class AuthService {
 
   async validateUser(email: string, password: string) {
     const user = await this.userService.findOne(email);
+
+    if (!user) throw new UnauthorizedException('Некорректная почта или пароль');
+
     const passwordIsMatch = await argon2.verify(user.password, password);
 
     if (passwordIsMatch) {
       return user;
     }
 
-    throw new UnauthorizedException('User or password are incorrect!');
+    throw new UnauthorizedException('Некорректная почта или пароль');
   }
 
   async login(user: IUser) {
