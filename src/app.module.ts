@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -8,8 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from './category/category.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { BillModule } from './bill/bill.module';
-import { DefaultCategoriesLoader } from './common/loaders/default-categories.loader';
 import { CommonModule } from './common/common.module';
+import { ReferenceValuesModule } from './reference-values/reference-values.module';
+import { ReferenceBookModule } from './reference-book/reference-book.module';
 
 @Module({
   imports: [
@@ -34,6 +35,8 @@ import { CommonModule } from './common/common.module';
     UserModule,
     BillModule,
     CommonModule,
+    ReferenceValuesModule,
+    ReferenceBookModule,
   ],
   controllers: [AppController],
   providers: [AppService],

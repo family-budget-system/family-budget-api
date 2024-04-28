@@ -3,10 +3,10 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
+  ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+  UpdateDateColumn
+} from "typeorm";
 import { User } from '../../user/entities/user.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
 
@@ -31,7 +31,7 @@ export class Bill {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => Transaction, (transaction) => transaction.bill, {
+  @OneToMany(() => Transaction, (transaction) => transaction.bill, {
     onDelete: 'CASCADE',
   })
   transactions: Transaction[];

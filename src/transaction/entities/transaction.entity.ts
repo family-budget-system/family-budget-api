@@ -26,7 +26,7 @@ export class Transaction {
   user: User;
 
   @ManyToOne(() => Bill, (bill) => bill.transactions)
-  @JoinColumn({ name: 'category_id' })
+  @JoinColumn({ name: 'bill_id' })
   bill: Bill;
 
   @CreateDateColumn()
