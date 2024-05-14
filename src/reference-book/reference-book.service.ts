@@ -36,8 +36,10 @@ export class ReferenceBookService {
     });
   }
 
-  findOne(refCodeName: string) {
-    return this.refsRepository.findBy({ ref_code_name: refCodeName });
+  async findOne(refCodeName: string) {
+    return await this.refsRepository.findOne({
+      where: { ref_code_name: refCodeName },
+    });
   }
 
   async update(id: number, updateReferenceBookDto: UpdateReferenceBookDto) {

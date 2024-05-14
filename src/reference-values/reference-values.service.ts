@@ -22,10 +22,19 @@ export class ReferenceValuesService {
     if (isExist)
       throw new BadRequestException('Значение с таким кодом уже существует');
 
+    const refBookExist = await this.refsRepository.findOne({
+      where: { id: createReferenceValueDto.refId },
+    });
+
+    if (!refBookExist)
+      throw new BadRequestException('Справочник с таким id не найден');
+
     const newRefValue = {
-      ref_code_name: createReferenceValueDto.codeName,
+      code_name: createReferenceValueDto.codeName,
       value: createReferenceValueDto.value,
+      ref_book: refBookExist,
     };
+
     return await this.refsValueRepository.save(newRefValue);
   }
 
