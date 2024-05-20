@@ -17,6 +17,7 @@ export class InitialRefsLoader {
       try {
         refBook = await this.referenceBookService.create({
           refCodeName: 'currency',
+          refName: 'Валюты',
         });
       } catch (e) {}
     }

@@ -9,6 +9,9 @@ export class ReferenceBook {
   @Column()
   ref_code_name: string;
 
+  @Column()
+  ref_name: string;
+
   @OneToMany(() => ReferenceValue, (refValue) => refValue.ref_book, {
     onDelete: 'CASCADE',
   })

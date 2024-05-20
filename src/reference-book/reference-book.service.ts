@@ -22,6 +22,7 @@ export class ReferenceBookService {
 
     const newRefBook = {
       ref_code_name: createReferenceBookDto.refCodeName,
+      ref_name: createReferenceBookDto.refName,
     };
     return await this.refsRepository.save(newRefBook);
   }
