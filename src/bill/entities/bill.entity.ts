@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { User } from '../../user/entities/user.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
+import { ReferenceValue } from "../../reference-values/entities/reference-value.entity";
 
 @Entity()
 export class Bill {
@@ -21,8 +22,9 @@ export class Bill {
   @Column()
   billType: string;
 
-  @Column()
-  currency: string;
+  @ManyToOne(() => ReferenceValue, (refValue) => refValue.bills)
+  @JoinColumn({ name: 'currency_id' })
+  currency: ReferenceValue;
 
   @Column()
   balance: number;

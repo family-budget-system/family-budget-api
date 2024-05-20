@@ -3,9 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ReferenceBook } from '../../reference-book/entities/reference-book.entity';
+import { Bill } from '../../bill/entities/bill.entity';
 
 @Entity()
 export class ReferenceValue {
@@ -17,6 +19,11 @@ export class ReferenceValue {
 
   @Column()
   value: string;
+
+  @OneToMany(() => Bill, (bill) => bill.currency, {
+    onDelete: 'CASCADE',
+  })
+  bills: Bill[];
 
   @ManyToOne(() => ReferenceBook, (refBook) => refBook.ref_values)
   @JoinColumn({ name: 'ref_id' })

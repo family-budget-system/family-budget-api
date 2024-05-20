@@ -9,8 +9,8 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
-  Req,
-} from '@nestjs/common';
+  Req, Put
+} from "@nestjs/common";
 import { BillService } from './bill.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { UpdateBillDto } from './dto/update-bill.dto';

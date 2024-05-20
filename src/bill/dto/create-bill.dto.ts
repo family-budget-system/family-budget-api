@@ -7,7 +7,7 @@ export class CreateBillDto {
   billType: BillTypeEnum;
 
   @IsNotEmpty()
-  currency: string;
+  currencyId: number;
 
   balance: number;
 }
