@@ -7,6 +7,11 @@ import { Repository } from 'typeorm';
 import { Category } from '../category/entities/category.entity';
 import { Bill } from '../bill/entities/bill.entity';
 import { User } from '../user/entities/user.entity';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class TransactionService {
@@ -56,8 +61,11 @@ export class TransactionService {
     return this.transactionRepository.save(newTransaction);
   }
 
-  async findAllByUser(userId: number) {
-    return await this.transactionRepository.find({
+  async findAllByUser(
+    options: IPaginationOptions,
+    userId: number,
+  ): Promise<Pagination<Transaction>> {
+    return paginate<Transaction>(this.transactionRepository, options, {
       where: { user: { id: userId } },
       relations: {
         bill: true,

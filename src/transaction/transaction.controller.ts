@@ -8,11 +8,15 @@ import {
   Delete,
   Req,
   UseGuards,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { IPaginationOptions } from 'nestjs-typeorm-paginate';
 
 @UseGuards(JwtAuthGuard)
 @Controller('transaction')
@@ -25,8 +29,12 @@ export class TransactionController {
   }
 
   @Get()
-  findAll(@Req() req) {
-    return this.transactionService.findAllByUser(+req.user.id);
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
+    @Req() req,
+  ) {
+    return this.transactionService.findAllByUser({ page, limit }, +req.user.id);
   }
 
   @Get(':id')
