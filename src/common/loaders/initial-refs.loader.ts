@@ -25,8 +25,8 @@ export class InitialRefsLoader {
     for (const currency of list) {
       try {
         await this.refValuesService.create({
-          codeName: currency.name,
-          value: currency.value,
+          codeName: currency.value,
+          value: currency.name,
           refId: refBook.id,
         });
       } catch (e) {}

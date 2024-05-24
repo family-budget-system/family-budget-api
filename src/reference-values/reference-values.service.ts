@@ -41,6 +41,7 @@ export class ReferenceValuesService {
   async findAllByRefCodeName(refCodeName: string) {
     const referenceBook = await this.refsRepository.findOne({
       where: { ref_code_name: refCodeName },
+      relations: { ref_values: true },
     });
     return referenceBook.ref_values;
   }

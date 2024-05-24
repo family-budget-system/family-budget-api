@@ -1,4 +1,5 @@
 import { IsNotEmpty } from 'class-validator';
+import { BillTypeEnum } from '../../@types';
 
 export class CreateBillDto {
   title: string;
@@ -10,12 +11,4 @@ export class CreateBillDto {
   currencyId: number;
 
   balance: number;
-}
-
-export enum BillTypeEnum {
-  CASH = 'cash',
-  CARD = 'card',
-  BANK_BILL = 'bank_bill',
-  CREDIT = 'credit',
-  DEPOSIT = 'deposit',
 }

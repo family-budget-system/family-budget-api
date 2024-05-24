@@ -52,7 +52,7 @@ export class BillService {
   async findAll(userId: number) {
     return await this.billRepository.find({
       where: { user: { id: userId } },
-      relations: { transactions: true, currency: true },
+      relations: { currency: true },
     });
   }
 
