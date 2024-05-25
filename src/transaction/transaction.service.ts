@@ -65,13 +65,16 @@ export class TransactionService {
     options: IPaginationOptions,
     userId: number,
   ): Promise<Pagination<Transaction>> {
-    return paginate<Transaction>(this.transactionRepository, options, {
-      where: { user: { id: userId } },
-      relations: {
-        bill: true,
-        category: true,
-      },
-    });
+    const queryBuilder = this.transactionRepository
+      .createQueryBuilder('t')
+      .leftJoinAndSelect('t.bill', 'bill')
+      .leftJoinAndSelect('bill.currency', 'currency')
+      .leftJoinAndSelect('t.category', 'category')
+      .leftJoinAndSelect('category.icon', 'icon')
+      .where('t.user_id = :userId', { userId })
+      .orderBy('t.payment_date', 'DESC');
+
+    return paginate<Transaction>(queryBuilder, options);
   }
 
   findOne(id: number) {

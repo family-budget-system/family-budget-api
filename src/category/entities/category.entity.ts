@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
+import { Icon } from "../../icon/entities/icon.entity";
 
 @Entity()
 export class Category {
@@ -27,6 +28,10 @@ export class Category {
     onDelete: 'CASCADE',
   })
   transactions: Transaction[];
+
+  @ManyToOne(() => Icon, (icon) => icon.categories)
+  @JoinColumn({ name: 'icon_id' })
+  icon: Icon;
 
   @CreateDateColumn()
   createdAt: Date;

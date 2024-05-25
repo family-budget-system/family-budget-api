@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "types": ["node"],
+    "typeRoots": [ "../node_modules/@types" ],
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -17,6 +19,6 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   }
 }

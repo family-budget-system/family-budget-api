@@ -9,6 +9,7 @@ import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity';
+import { Icon } from '../icon/entities/icon.entity';
 
 @Injectable()
 export class CategoryService {
@@ -18,6 +19,9 @@ export class CategoryService {
 
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Icon)
+    private readonly iconRepository: Repository<Icon>,
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto, id: number) {
@@ -30,8 +34,17 @@ export class CategoryService {
       throw new BadRequestException('Данная категория уже существует');
     }
 
+    const icon = await this.iconRepository.findOne({
+      where: { name: createCategoryDto.iconName },
+    });
+
+    if (!icon) {
+      throw new BadRequestException('Такая иконка не существует');
+    }
+
     const newCategory = {
       title: createCategoryDto.title,
+      icon,
       user: {
         id,
       },

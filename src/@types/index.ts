@@ -14,5 +14,4 @@ export enum BillTypeEnum {
 export enum TransactionTypeEnum {
   consumption = 'consumption',
   income = 'income',
-  transfer = 'transfer',
 }

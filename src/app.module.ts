@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from "@nestjs/common";
+import { Module, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -11,6 +11,9 @@ import { BillModule } from './bill/bill.module';
 import { CommonModule } from './common/common.module';
 import { ReferenceValuesModule } from './reference-values/reference-values.module';
 import { ReferenceBookModule } from './reference-book/reference-book.module';
+import { IconModule } from './icon/icon.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -37,6 +40,10 @@ import { ReferenceBookModule } from './reference-book/reference-book.module';
     CommonModule,
     ReferenceValuesModule,
     ReferenceBookModule,
+    IconModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

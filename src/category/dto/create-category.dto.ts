@@ -6,4 +6,5 @@ export class CreateCategoryDto {
   title: string;
   @IsOptional()
   user?: User | null;
+  iconName: string;
 }
